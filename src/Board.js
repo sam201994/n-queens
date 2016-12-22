@@ -50,6 +50,13 @@
       );
     },
 
+    hasDiagonalConflictsAt: function(colIndex) {
+      return (
+        this.hasMajorDiagonalConflictAt(colIndex) ||
+        this.hasMinorDiagonalConflictAt(colIndex)
+      );
+    },
+
     hasAnyQueensConflicts: function() {
       return this.hasAnyRooksConflicts() || this.hasAnyMajorDiagonalConflicts() || this.hasAnyMinorDiagonalConflicts();
     },
@@ -58,8 +65,24 @@
       return (
         0 <= rowIndex && rowIndex < this.get('n') &&
         0 <= colIndex && colIndex < this.get('n')
-      );
+      );      
     },
+
+
+    hasColumn: function(col, obj) {
+
+     // console.log("column obj:", JSON.stringify(obj));
+      if (obj[col]) {
+        return true;
+      } else {
+        obj[col] = true;
+        return false;
+      }
+    },
+
+
+
+
 
 
 /*
