@@ -79,16 +79,19 @@ window.findNQueensSolution = function(n) {
   var obj = {};
   var skip = true;
   var sum = 0;
-  var flag = 0;
+  var solutionFound = false;
   var solutionBoardUser = [];
   if (n > 2) { skip = false; }
   if (n === 3 || n === 2) { return board.rows(); }
 
   function inner(board, row) {
+    if (solutionFound) {
+      return;
+    }
     if (row === n) {
-      if ((sum === n && flag === 0 )) {
+      if ((sum === n)) {
         solutionBoardUser = board.matrixCopy(board.rows());
-        flag = 1;
+        solutionFound = true;
       }
       return;
     }
