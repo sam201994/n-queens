@@ -87,6 +87,19 @@
       }
     },
 
+    matrixCopy: function(originalMatrix) {
+      var solutionBoardUser = [];
+      n = originalMatrix.length;
+      for (var i = 0; i < n; i++) {
+        var r = [];
+        for (var j = 0; j < n; j++) {
+          r[j] = originalMatrix[i][j];
+        }
+        solutionBoardUser.push(r);
+      }
+      return solutionBoardUser;
+    },
+
 
 
 
