@@ -76,63 +76,115 @@ window.countNRooksSolutions = function(n) {
 
 
 // return a matrix (an array of arrays) representing a single nxn chessboard, with n queens placed such that none of them can attack each other
-// window.findNQueensSolution = function(n) {
-//   var board = new Board({n: n});
-//   var obj = {};
+window.findNQueensSolution = function(n) {
+   
+  var board = new Board({n: n});
+  var obj = {};
+  var skip = true;
+  var sum = 0;
+  var flag = 0;
+  var solutionBoardUser = [];
+  if (n > 2) {
+    skip = false;
+  }
 
-//   function inner(board, row) {
-//     if (row === n) {
-//       return;
-//     }
-//     for (var col = 0; col < n; col++) {
-//     //  debugger;
-//       if (!(board.hasColumn(col, obj) || board.hasDiagonalConflictsAt(col))) {
-//         board.togglePiece(row, col);
-//         inner(board, row + 1);
-//         obj[col] = false;
-//       } 
-//     }
-//   }
+  if (n === 3 || n === 2) return board.rows();
+  function inner(board, row) {
+    if (row === n) {
 
-//   inner(board, 0);
+      if ((sum === n && flag === 0 )) {
+       
+        for (var i = 0; i < n; i++) {
+          var r = [];
+          for (var j = 0; j < n; j++) {
+            r[j] = board.rows()[i][j];
+          }
+          solutionBoardUser.push(r);
+        }
+        console.log(JSON.stringify(solutionBoardUser));
+        flag = 1;
 
-//   var solution = board.rows();
+      }
+      return;
+    }
+    for (var col = 0; col < n; col++) {
+      if (!board.hasColumn(col, obj)) {
+        board.togglePiece(row, col);
+        if (!board.hasAnyDiagonalConflicts()) {
+          sum++;
+          inner(board, row + 1);
+
+          if (!skip) {
+            sum--;
+            board.togglePiece(row, col);
+            obj[col] = false;
+          }
+        }
+
+        else {
+          board.togglePiece(row, col);
+          obj[col] = false;
+        }
+      } 
+    }
+  }
+
+  inner(board, 0);
+
+ // var solution = solutionBoardUser.rows();
 
 
-//   console.log('Single solution for ' + n + ' queens:', JSON.stringify(solution));
-//   return solution;
-// };
+  //console.log('Single solution for ' + n + ' queens:', JSON.stringify(solutionBoardUser));
+  return solutionBoardUser;
+};
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-//    var board = new Board({n: n});
-//   var solutionCount = 0;
-//   var obj = {};
-// var sum=0;
-//   function inner(board, row) {
-//     if (row === n) {
-//       if(sum===n){
-//         solutionCount++;
-//         sum=0;
-//         return;
-//       }
-      
-//       return;
-//     }
-//     for (var col = 0; col < n; col++) {
-//       if (!(board.hasColumn(col, obj) || hasMajorDiagonalConflictAt(col) || hasMinorDiagonalConflictAt(col) )) {
-//         board.togglePiece(row, col);
-//         sum++;
-//         inner(board, row + 1);
-//         obj[col] = false;
-//       } 
-//     }
-//   }
 
-//   inner(board, 0);
+  var board = new Board({n: n});
+  var obj = {};
+  var skip = true;
+  var sum = 0;
 
-//   var solution = board.rows();
+  var solutionCount = 0;
 
-//   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
-//   return solutionCount;
+  if (n > 2) {
+    skip = false;
+  }
+
+  if (n === 3 || n === 2) return 0;
+  
+  function inner(board, row) {
+    if (row === n) {
+      if (sum === n) {
+        solutionCount++;
+      }
+      return;
+    }
+    for (var col = 0; col < n; col++) {
+      if (!board.hasColumn(col, obj)) {
+        board.togglePiece(row, col);
+        if (!board.hasAnyDiagonalConflicts()) {
+          sum++;
+          inner(board, row + 1);
+
+          if (!skip) {
+            sum--;
+            board.togglePiece(row, col);
+            obj[col] = false;
+          }
+        }
+
+        else {
+          board.togglePiece(row, col);
+          obj[col] = false;
+        }
+      } 
+    }
+  }
+
+  inner(board, 0);
+
+  //console.log('Number of solutions for ' + n + ' queens:', solutionCount);
+  return solutionCount;
 };

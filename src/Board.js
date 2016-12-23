@@ -57,6 +57,13 @@
       );
     },
 
+    hasAnyDiagonalConflicts: function() {
+      return (
+        this.hasAnyMajorDiagonalConflicts() ||
+        this.hasAnyMinorDiagonalConflicts()
+      );
+    },
+
     hasAnyQueensConflicts: function() {
       return this.hasAnyRooksConflicts() || this.hasAnyMajorDiagonalConflicts() || this.hasAnyMinorDiagonalConflicts();
     },
