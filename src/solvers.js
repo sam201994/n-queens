@@ -90,7 +90,7 @@ window.findNQueensSolution = function(n) {
     }
     if (row === n) {
       if ((sum === n)) {
-        solutionBoardUser = board.matrixCopy(board.rows());
+        solutionBoardUser = (JSON.parse(JSON.stringify(board.rows())));
         solutionFound = true;
       }
       return;
@@ -98,7 +98,7 @@ window.findNQueensSolution = function(n) {
     for (var col = 0; col < n; col++) {
       if (!board.hasColumn(col, obj)) {
         board.togglePiece(row, col);
-        if (!board.hasAnyDiagonalConflicts()) {
+        if (!board.hasDiagonalConflictsAt(row, col)) {
           sum++;
           inner(board, row + 1);
           if (!skip) {
@@ -136,7 +136,7 @@ window.countNQueensSolutions = function(n) {
     for (var col = 0; col < n; col++) {
       if (!board.hasColumn(col, obj)) {
         board.togglePiece(row, col);
-        if (!board.hasAnyDiagonalConflicts()) {
+        if (!board.hasDiagonalConflictsAt(row, col)) {
           sum++;
           inner(board, row + 1);
           if (!skip) {

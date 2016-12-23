@@ -50,10 +50,10 @@
       );
     },
 
-    hasDiagonalConflictsAt: function(colIndex) {
+    hasDiagonalConflictsAt: function(rowIndex, colIndex) {
       return (
-        this.hasMajorDiagonalConflictAt(colIndex) ||
-        this.hasMinorDiagonalConflictAt(colIndex)
+        this.hasMajorDiagonalConflictAt(this._getFirstRowColumnIndexForMajorDiagonalOn(rowIndex, colIndex)) ||
+        this.hasMinorDiagonalConflictAt(this._getFirstRowColumnIndexForMinorDiagonalOn(rowIndex, colIndex))
       );
     },
 
